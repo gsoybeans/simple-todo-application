@@ -39,15 +39,35 @@ function addTask(title) {
  * true     |   false
  * false    |   true
  */
-function onUpdateIsDone(task) {
-    console.log("チェックボックスがクリックされました。", task);
+function addTask() {
+    const input = document.getElementById("task-input");
+    const taskList = document.getElementById("task-list");
 
-    // 達成状態を更新(このままだと、現在の達成状態で更新されてしまう！)
-    const currentValue = task.isDone;
-    task.isDone = currentValue;
+    if (input.value.trim() !== "") {
+        const listItem = document.createElement("li");
 
-    return task;
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+
+        // ✅ チェックイベントでスタイル変更
+        checkbox.addEventListener("change", () => {
+            if (checkbox.checked) {
+                listItem.style.textDecoration = "line-through"; // 達成時
+            } else {
+                listItem.style.textDecoration = "none"; // 未達成時
+            }
+        });
+
+        const taskText = document.createTextNode(input.value);
+
+        listItem.appendChild(checkbox);
+        listItem.appendChild(taskText);
+        taskList.appendChild(listItem);
+
+        input.value = "";
+    }
 }
+
 
 /**
  * [学生3]
